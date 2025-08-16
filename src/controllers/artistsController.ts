@@ -4,7 +4,7 @@ import album from "../models/albums.js";
 
 export const createArtist = async (req:Request, res: Response): Promise<void> => {
     try {
-        const {nombre, pais, albums, createdAt, updatedAt} = req.body
+        const {nombre, pais, albums,  } = req.body
 
         if (!nombre) {
             res.status(400).json({ error: "El nombre es obligatorio" });
@@ -20,8 +20,7 @@ export const createArtist = async (req:Request, res: Response): Promise<void> =>
                 nombre,
                 pais,
                 albums,
-                createdAt,
-                updatedAt
+                
             },
         })
         res.status(201).json({ artist });
