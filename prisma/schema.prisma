@@ -37,6 +37,8 @@ model album {
   canciones cancion[] // Un álbum puede tener varias canciones
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+
+  @@map("Album")
 }
 
 // Modelo de Canción
@@ -48,4 +50,7 @@ model cancion {
   album    album   @relation(fields: [albumId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("Cancion")
+
 }
