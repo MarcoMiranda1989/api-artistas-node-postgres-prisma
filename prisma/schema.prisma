@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Modelo de Artista
+model Artista {
+  id       Int      @id @default(autoincrement())
+  nombre   String
+  pais     String?
+  albums   Album[]  // Un artista puede tener varios álbumes
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Modelo de Álbum
+model Album {
+  id        Int       @id @default(autoincrement())
+  titulo    String
+  anio      Int
+  genero    String?
+  artistaId Int       // Relación con Artista
+  artista   Artista   @relation(fields: [artistaId], references: [id], onDelete: Cascade)
+  canciones Cancion[] // Un álbum puede tener varias canciones
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+// Modelo de Canción
+model Cancion {
+  id       Int     @id @default(autoincrement())
+  titulo   String
+  duracion Int     // Duración en segundos
+  albumId  Int
+  album    Album   @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
