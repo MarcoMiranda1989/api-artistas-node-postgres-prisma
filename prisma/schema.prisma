@@ -15,7 +15,7 @@ datasource db {
 }
 
 // Modelo de Artista
-model Artista {
+model artista {
   id       Int      @id @default(autoincrement())
   nombre   String
   pais     String?
@@ -25,7 +25,7 @@ model Artista {
 }
 
 // Modelo de Álbum
-model Album {
+model album {
   id        Int       @id @default(autoincrement())
   titulo    String
   anio      Int
@@ -38,7 +38,7 @@ model Album {
 }
 
 // Modelo de Canción
-model Cancion {
+model cancion {
   id       Int     @id @default(autoincrement())
   titulo   String
   duracion Int     // Duración en segundos
