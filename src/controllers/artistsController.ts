@@ -1,31 +1,21 @@
 import type { Request, Response } from "express";
 import prisma from "../models/prisma.js"; // <-- import del cliente completo
-import album from "../models/albums.js";
 
-export const createArtist = async (req: Request, res: Response):Promise<Response | void> => {
+
+export const createArtist = async (req: Request, res: Response): Promise<Response | void> => {
     try {
-        const { nombre, pais } = req.body; // Eliminamos albums si no se usa
-
-        if (!nombre) {
-            return res.status(400).json({ error: "El nombre es obligatorio" }); // Agregado return
-        }
-        if (!pais) {
-            return res.status(400).json({ error: "El pais es obligatorio" }); // Agregado return
-        }
+        const { nombre, pais } = req.body;
+        if (!nombre) return res.status(400).json({ error: "El nombre es obligatorio" });
+        if (!pais) return res.status(400).json({ error: "El pais es obligatorio" });
 
         const artist = await prisma.artista.create({
-            data: {
-                nombre,
-                pais
-            },
+            data: { nombre, pais }
         });
-        res.status(201).json(artist); // Envía directamente el artista, sin envolverlo
+        console.log("Artista creado:", artist);
+        return res.status(201).json(artist);
     } catch (error: any) {
-        if (error?.code === "P2002" && error?.meta?.target?.includes("nombre")) {
-            return res.status(400).json({ message: "El artista ya existe" }); // Corregido mensaje y agregado return
-        }
-        console.error("Error en createArtist:", error); // Mejor log
-        return res.status(500).json({ error: "Hubo un error al crear el artista" }); // Agregado return
+        console.error(error);
+        return res.status(500).json({ error: "Hubo un error al crear el artista" });
     }
 }
 
