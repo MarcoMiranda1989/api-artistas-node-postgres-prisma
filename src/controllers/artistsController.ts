@@ -3,6 +3,7 @@ import prisma from "../models/prisma.js"; // <-- import del cliente completo
 
 
 export const createArtist = async (req: Request, res: Response): Promise<Response | void> => {
+    console.log("POST /artists body:", req.body); // <--- NUEVO
     try {
         const { nombre, pais } = req.body;
         if (!nombre) return res.status(400).json({ error: "El nombre es obligatorio" });
@@ -18,6 +19,7 @@ export const createArtist = async (req: Request, res: Response): Promise<Respons
         return res.status(500).json({ error: "Hubo un error al crear el artista" });
     }
 }
+
 
 export const getAllArtists = async (req:Request, res: Response): Promise<void> => {
     try {
