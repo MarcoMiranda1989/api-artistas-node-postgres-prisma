@@ -19,7 +19,7 @@ model artista {
   id       Int      @id @default(autoincrement())
   nombre   String
   pais     String?
-  albums   Album[]  // Un artista puede tener varios álbumes
+  albums   album[]  // Un artista puede tener varios álbumes
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -31,8 +31,8 @@ model album {
   anio      Int
   genero    String?
   artistaId Int       // Relación con Artista
-  artista   Artista   @relation(fields: [artistaId], references: [id], onDelete: Cascade)
-  canciones Cancion[] // Un álbum puede tener varias canciones
+  artista   artista   @relation(fields: [artistaId], references: [id], onDelete: Cascade)
+  canciones cancion[] // Un álbum puede tener varias canciones
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -43,7 +43,7 @@ model cancion {
   titulo   String
   duracion Int     // Duración en segundos
   albumId  Int
-  album    Album   @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  album    album   @relation(fields: [albumId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
