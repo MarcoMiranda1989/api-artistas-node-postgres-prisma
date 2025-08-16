@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "rimraf ./dist && tsc",
-    "start": "node dist/server.js",
+    "start": "prisma generate && node dist/server.js",
     "postinstall": "prisma generate",
     "migrate": "prisma migrate deploy"
   },
