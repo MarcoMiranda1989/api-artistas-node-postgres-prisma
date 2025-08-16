@@ -1,4 +1,4 @@
-import prisma from "../models/albums.js";
+import prisma from "../models/prisma.js";
 export const createAlbum = async (req, res) => {
     try {
         const { titulo, anio, genero, artistaId, artista, canciones, createdAt, updatedAt } = req.body;
@@ -18,8 +18,7 @@ export const createAlbum = async (req, res) => {
             res.status(400).json({ error: "El ID del artista es obligatorio" });
             return;
         }
-        //checando todos los errores podemos continuar a crear el album
-        const album = await prisma.create({
+        const album = await prisma.album.create({
             data: {
                 titulo,
                 anio,
@@ -32,10 +31,10 @@ export const createAlbum = async (req, res) => {
         res.status(201).json({ album });
     }
     catch (error) {
-        {
-            if (error?.code === "P2002" && error?.meta?.target?.includes("artistaId")) {
-                res.status(400).json({ message: "el artista ingresado ya existe" });
-            }
+        if (error?.code === "P2002" && error?.meta?.target?.includes("artistaId")) {
+            res.status(400).json({ message: "el artista ingresado ya existe" });
+        }
+        else {
             console.log(error);
             res.status(500).json({ error: "Hubo un error" });
         }
@@ -43,10 +42,8 @@ export const createAlbum = async (req, res) => {
 };
 export const getAllAlbums = async (req, res) => {
     try {
-        const albums = await prisma.findMany({
-            include: {
-                canciones: true
-            }
+        const albums = await prisma.album.findMany({
+            include: { canciones: true }
         });
         res.status(200).json(albums);
     }
@@ -58,13 +55,9 @@ export const getAllAlbums = async (req, res) => {
 export const getAlbumById = async (req, res) => {
     const albumId = Number(req.params.id);
     try {
-        const album = await prisma.findUnique({
-            where: {
-                id: albumId
-            },
-            include: {
-                canciones: true
-            }
+        const album = await prisma.album.findUnique({
+            where: { id: albumId },
+            include: { canciones: true }
         });
         if (!album) {
             res.status(404).json({ error: "la cancion no fue encontrada" });
@@ -81,27 +74,19 @@ export const updateAlbum = async (req, res) => {
     const idAlbum = Number(req.params.id);
     const { titulo, anio, genero, artistaId, artista } = req.body;
     try {
-        //aqui nos traemos toda la info del req.body con el spread operator listo para actualizarse
         let albumData = { ...req.body };
-        if (titulo) {
+        if (titulo)
             albumData.titulo = titulo;
-        }
-        if (anio) {
+        if (anio)
             albumData.anio = anio;
-        }
-        if (genero) {
+        if (genero)
             albumData.genero = genero;
-        }
-        if (artistaId) {
+        if (artistaId)
             albumData.artistaId = artistaId;
-        }
-        if (artista) {
+        if (artista)
             albumData.artista = artista;
-        }
-        const song = await prisma.update({
-            where: {
-                id: idAlbum
-            },
+        const song = await prisma.album.update({
+            where: { id: idAlbum },
             data: albumData
         });
         res.status(200).json(song);
@@ -122,15 +107,10 @@ export const updateAlbum = async (req, res) => {
 export const deleteAlbum = async (req, res) => {
     const idAlbum = Number(req.params.id);
     try {
-        await prisma.delete({
-            where: {
-                id: idAlbum,
-            },
+        await prisma.album.delete({
+            where: { id: idAlbum },
         });
-        res
-            .status(200)
-            .json({ message: `El album ${idAlbum} ha sido eliminado con exito` })
-            .end();
+        res.status(200).json({ message: `El album ${idAlbum} ha sido eliminado con exito` }).end();
     }
     catch (error) {
         console.log(error);

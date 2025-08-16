@@ -1,18 +1,20 @@
-import prisma from '../models/songs.js';
+import prisma from '../models/prisma.js'; // <-- import del cliente completo
 export const createSong = async (req, res) => {
     const { titulo, duracion, albumId } = req.body;
     try {
         if (!titulo) {
             res.status(400).json({ error: 'El titulo debe estar incluido' });
+            return;
         }
         if (!duracion) {
             res.status(400).json({ error: 'La duracion debe estar incluido' });
+            return;
         }
         if (!albumId) {
             res.status(400).json({ error: 'El albumId debe estar incluido' });
+            return;
         }
-        //comprobando que la informacion esta correcta, podemos crear la cancion
-        const song = await prisma.create({
+        const song = await prisma.cancion.create({
             data: {
                 titulo,
                 duracion,
@@ -28,7 +30,7 @@ export const createSong = async (req, res) => {
 };
 export const getAllSongs = async (req, res) => {
     try {
-        const songs = await prisma.findMany();
+        const songs = await prisma.cancion.findMany();
         res.status(200).json(songs);
     }
     catch (error) {
@@ -39,10 +41,8 @@ export const getAllSongs = async (req, res) => {
 export const getSongById = async (req, res) => {
     const songId = Number(req.params.id);
     try {
-        const song = await prisma.findUnique({
-            where: {
-                id: songId
-            }
+        const song = await prisma.cancion.findUnique({
+            where: { id: songId }
         });
         if (!song) {
             res.status(404).json({ error: "la cancion no fue encontrada" });
@@ -59,21 +59,15 @@ export const updateSong = async (req, res) => {
     const songId = Number(req.params.id);
     const { titulo, duracion, albumId } = req.body;
     try {
-        //aqui nos traemos toda la info del req.body con el spread operator listo para actualizarse
         let songData = { ...req.body };
-        if (titulo) {
+        if (titulo)
             songData.titulo = titulo;
-        }
-        if (duracion) {
+        if (duracion)
             songData.duracion = duracion;
-        }
-        if (albumId) {
+        if (albumId)
             songData.albumId = albumId;
-        }
-        const song = await prisma.update({
-            where: {
-                id: songId
-            },
+        const song = await prisma.cancion.update({
+            where: { id: songId },
             data: songData
         });
         res.status(200).json(song);
@@ -94,15 +88,10 @@ export const updateSong = async (req, res) => {
 export const deleteSong = async (req, res) => {
     const songId = Number(req.params.id);
     try {
-        await prisma.delete({
-            where: {
-                id: songId,
-            },
+        await prisma.cancion.delete({
+            where: { id: songId },
         });
-        res
-            .status(200)
-            .json({ message: `La cancion ${songId} ha sido eliminado con exito` })
-            .end();
+        res.status(200).json({ message: `La cancion ${songId} ha sido eliminado con exito` }).end();
     }
     catch (error) {
         console.log(error);
