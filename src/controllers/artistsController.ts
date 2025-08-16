@@ -18,8 +18,7 @@ export const createArtist = async (req:Request, res: Response): Promise<void> =>
         const artist = await prisma.artista.create({
             data:{
                 nombre,
-                pais,
-                albums,
+                pais
                 
             },
         })
