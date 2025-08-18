@@ -3,6 +3,7 @@ export interface Artist {
     id: number;
     nombre: string;
     pais?: string;
+    image: string;
     albums?: Album[];
     createdAt: Date;
     updatedAt: Date;

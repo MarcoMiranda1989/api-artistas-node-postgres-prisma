@@ -19,6 +19,7 @@ model artista {
   id       Int      @id @default(autoincrement())
   nombre   String
   pais     String?
+  image    String? 
   albums   album[]  // Un artista puede tener varios álbumes
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -31,6 +32,7 @@ model album {
   id        Int       @id @default(autoincrement())
   titulo    String
   anio      Int
+  image     String? 
   genero    String?
   artistaId Int       // Relación con Artista
   artista   artista   @relation(fields: [artistaId], references: [id], onDelete: Cascade)

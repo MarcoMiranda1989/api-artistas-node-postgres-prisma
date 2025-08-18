@@ -5,6 +5,7 @@ export interface Album {
   id: number;
   titulo: string;
   anio: number;
+  image:string;
   genero?: string;
   artistaId: number;
   artista?: Artist; // Opcional, si quieres incluir el artista relacionado

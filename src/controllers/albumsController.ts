@@ -3,7 +3,7 @@ import prisma from "../models/prisma.js"
 
 export const createAlbum = async (req:Request, res: Response): Promise<void> => {
     try {
-        const { titulo, anio, genero, artistaId, artista, canciones, createdAt, updatedAt } = req.body
+        const { titulo, anio, genero, artistaId, artista, canciones,image,  createdAt, updatedAt } = req.body
 
         if (!titulo) {
             res.status(400).json({ error: "El titulo es obligatorio" });
@@ -26,6 +26,7 @@ export const createAlbum = async (req:Request, res: Response): Promise<void> => 
             data:{
                 titulo,
                 anio,
+                image,
                 genero,
                 artistaId,
                 createdAt,

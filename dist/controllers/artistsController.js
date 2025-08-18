@@ -2,13 +2,17 @@ import prisma from "../models/prisma.js"; // <-- import del cliente completo
 export const createArtist = async (req, res) => {
     console.log("POST /artists body:", req.body); // <--- NUEVO
     try {
-        const { nombre, pais } = req.body;
+        const { nombre, pais, image } = req.body; // <-- agregamos imagen
         if (!nombre)
             return res.status(400).json({ error: "El nombre es obligatorio" });
         if (!pais)
             return res.status(400).json({ error: "El pais es obligatorio" });
         const artist = await prisma.artista.create({
-            data: { nombre, pais }
+            data: {
+                nombre,
+                pais,
+                image // <-- agregamos aquí
+            }
         });
         console.log("Artista creado:", artist);
         return res.status(201).json(artist);
