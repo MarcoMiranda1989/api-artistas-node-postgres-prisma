@@ -3,8 +3,10 @@ import express from 'express';
 import artistsRoutes from './routes/artistsRoutes.js';
 import albumsRoutes from './routes/albumsRoutes.js';
 import songsRoutes from './routes/songsRoutes.js';
+import cors from "cors";
 dotenv.config();
 const app = express();
+app.use(cors());
 app.use(express.json());
 // 🔍 Middleware de debugging
 app.use((req, res, next) => {
