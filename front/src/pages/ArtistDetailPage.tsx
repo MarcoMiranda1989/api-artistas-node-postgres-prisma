@@ -41,14 +41,14 @@ export default function ArtistDetailPage() {
   }
 
   if (!artist && !error) {
-    return <p className="text-white/50 text-center py-12">Cargando...</p>
+    return     <p className="text-gray-400 text-center py-12">Cargando...</p>
   }
 
   if (error && !artist) {
     return (
       <div className="text-center py-12">
-        <p className="text-red-400 mb-4">{error}</p>
-        <button onClick={() => navigate('/artists')} className="text-accent-light hover:underline">
+        <p className="text-red-500 mb-4">{error}</p>
+        <button onClick={() => navigate('/artists')} className="text-indigo-600 hover:text-indigo-700 hover:underline font-medium">
           Volver a artistas
         </button>
       </div>
@@ -59,15 +59,15 @@ export default function ArtistDetailPage() {
     <div>
       <button
         onClick={() => navigate('/artists')}
-        className="text-accent-light hover:underline mb-4 inline-block"
+        className="text-indigo-600 hover:text-indigo-700 hover:underline mb-4 inline-block font-medium"
       >
         &larr; Volver a artistas
       </button>
 
       {artist && (
         <>
-          <div className="bg-secondary rounded-lg p-6 mb-8 flex items-center gap-6">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-accent to-accent-light flex items-center justify-center overflow-hidden shrink-0">
+          <div className="bg-white rounded-xl p-6 mb-8 flex items-center gap-6 shadow-sm border border-gray-100">
+            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-400 flex items-center justify-center overflow-hidden shrink-0">
               {artist.image ? (
                 <img src={artist.image} alt={artist.nombre} className="w-full h-full object-cover" />
               ) : (
@@ -75,16 +75,16 @@ export default function ArtistDetailPage() {
               )}
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-highlight">{artist.nombre}</h1>
-              <p className="text-white/60">{artist.pais || 'País no especificado'}</p>
+              <h1 className="text-3xl font-bold text-gray-900">{artist.nombre}</h1>
+              <p className="text-gray-500">{artist.pais || 'País no especificado'}</p>
             </div>
           </div>
 
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold text-accent-light">Álbumes</h2>
+            <h2 className="text-2xl font-bold text-indigo-600">Álbumes</h2>
             <button
               onClick={() => setShowForm(true)}
-              className="bg-accent hover:bg-accent-light text-white px-4 py-2 rounded font-medium transition-colors text-sm"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-sm shadow-sm"
             >
               + Nuevo Álbum
             </button>
@@ -101,7 +101,7 @@ export default function ArtistDetailPage() {
           )}
 
           {(!artist.albums || artist.albums.length === 0) && (
-            <p className="text-white/50 text-center py-8">Este artista no tiene álbumes</p>
+            <p className="text-gray-400 text-center py-8">Este artista no tiene álbumes</p>
           )}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -41,14 +41,14 @@ export default function AlbumDetailPage() {
   }
 
   if (!album && !error) {
-    return <p className="text-white/50 text-center py-12">Cargando...</p>
+    return     <p className="text-gray-400 text-center py-12">Cargando...</p>
   }
 
   if (error && !album) {
     return (
       <div className="text-center py-12">
-        <p className="text-red-400 mb-4">{error}</p>
-        <button onClick={() => navigate('/albums')} className="text-accent-light hover:underline">
+        <p className="text-red-500 mb-4">{error}</p>
+        <button onClick={() => navigate('/albums')} className="text-indigo-600 hover:text-indigo-700 hover:underline font-medium">
           Volver a álbumes
         </button>
       </div>
@@ -59,15 +59,15 @@ export default function AlbumDetailPage() {
     <div>
       <button
         onClick={() => navigate('/albums')}
-        className="text-accent-light hover:underline mb-4 inline-block"
+        className="text-indigo-600 hover:text-indigo-700 hover:underline mb-4 inline-block font-medium"
       >
         &larr; Volver a álbumes
       </button>
 
       {album && (
         <>
-          <div className="bg-secondary rounded-lg p-6 mb-8 flex items-center gap-6">
-            <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-accent/80 to-highlight/60 flex items-center justify-center overflow-hidden shrink-0">
+          <div className="bg-white rounded-xl p-6 mb-8 flex items-center gap-6 shadow-sm border border-gray-100">
+            <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-indigo-400 to-purple-400 flex items-center justify-center overflow-hidden shrink-0">
               {album.image ? (
                 <img src={album.image} alt={album.titulo} className="w-full h-full object-cover" />
               ) : (
@@ -75,24 +75,24 @@ export default function AlbumDetailPage() {
               )}
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-highlight">{album.titulo}</h1>
-              <p className="text-white/60">{album.anio} {album.genero ? `· ${album.genero}` : ''}</p>
+              <h1 className="text-3xl font-bold text-gray-900">{album.titulo}</h1>
+              <p className="text-gray-500">{album.anio} {album.genero ? `· ${album.genero}` : ''}</p>
               {album.artista && (
                 <button
-                  onClick={() => navigate(`/artists/${album.artista?.id}`)}
-                  className="text-accent-light hover:underline text-sm mt-1"
+                  onClick={() => navigate(`/artists/${album.artista!.id}`)}
+                  className="text-indigo-600 hover:text-indigo-700 hover:underline text-sm mt-1 font-medium"
                 >
-                  {album.artista?.nombre}
+                  {album.artista!.nombre}
                 </button>
               )}
             </div>
           </div>
 
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold text-accent-light">Canciones</h2>
+            <h2 className="text-2xl font-bold text-indigo-600">Canciones</h2>
             <button
               onClick={() => setShowForm(true)}
-              className="bg-accent hover:bg-accent-light text-white px-4 py-2 rounded font-medium transition-colors text-sm"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-sm shadow-sm"
             >
               + Nueva Canción
             </button>
@@ -109,7 +109,7 @@ export default function AlbumDetailPage() {
           )}
 
           {(!album.canciones || album.canciones.length === 0) && (
-            <p className="text-white/50 text-center py-8">Este álbum no tiene canciones</p>
+            <p className="text-gray-400 text-center py-8">Este álbum no tiene canciones</p>
           )}
 
           <div className="space-y-2">
